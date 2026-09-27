@@ -4,7 +4,7 @@
 
 ## Still needed
 - [ ] **Jiji URL**: post the listing (see `docs/JIJI_POST.md`), then paste the URL into `jijiUrl` in `src/data/site.json`.
-- [ ] **Domain name**: set `domain` in `site.json`.
+- [x] Domain: philip-larweh-site.vercel.app (swap for a custom domain later if wanted)
 - [ ] Optional: social links, testimonials/credentials he's happy to publish, analytics, and whether to enable GeneralContractor structured data (`structuredData: true`).
 
 ## Confirmed (2026-09-27)
