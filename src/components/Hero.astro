@@ -1,0 +1,38 @@
+---
+import { getImage } from 'astro:assets';
+import site from '../data/site.json';
+import Icon from './Icon.astro';
+import { photo } from '../lib/photos';
+import { waLink, telLink } from '../lib/whatsapp';
+
+// Art direction: landscape slab shot on wide screens, portrait formwork shot on phones.
+const wide = photo('slab-rebar-film-faced-deck.jpg');
+const tall = photo('beam-formwork-bamboo-props.jpg');
+const set = async (src: typeof wide, format: 'avif' | 'webp' | 'jpg') => {
+  const widths = [480, 780, 1040].filter((w) => w <= src.width);
+  const imgs = await Promise.all(widths.map((w) => getImage({ src, width: w, format, quality: 70 })));
+  return imgs.map((img, i) => `${img.src} ${widths[i]}w`).join(', ');
+};
+const [tallAvif, tallWebp, wideAvif, wideWebp, fallback] = await Promise.all([
+  set(tall, 'avif'), set(tall, 'webp'), set(wide, 'avif'), set(wide, 'webp'),
+  getImage({ src: wide, width: 1040, format: 'jpg', quality: 72 }),
+]);
+---
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <picture>
+    <source media="(max-width: 767px)" type="image/avif" srcset={tallAvif} sizes="100vw" />
+    <source media="(max-width: 767px)" type="image/webp" srcset={tallWebp} sizes="100vw" />
+    <source type="image/avif" srcset={wideAvif} sizes="100vw" />
+    <source type="image/webp" srcset={wideWebp} sizes="100vw" />
+    <img src={fallback.src} width={wide.width} height={wide.height} alt="Slab reinforcement and beam cages tied over plywood floor decking on a building site" fetchpriority="high" decoding="async" />
+  </picture>
+  <div class="wrap">
+    <p class="eyebrow">{site.name} · {site.baseLocation}</p>
+    <h1 id="hero-title">{site.headline}</h1>
+    <p>Steel bending, carpentry, formwork and floor decking, plus materials for hire. Based in {site.baseLocation}. {site.serviceArea}</p>
+    <div class="btn-row">
+      <a class="btn btn--wa" href={waLink()} data-track="whatsapp" data-track-context="hero"><Icon name="whatsapp" /> Chat on WhatsApp</a>
+      <a class="btn btn--light" href={telLink} data-track="call" data-track-context="hero"><Icon name="phone" /> Call now</a>
+    </div>
+  </div>
+</section>

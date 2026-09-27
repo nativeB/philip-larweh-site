@@ -1,0 +1,14 @@
+---
+interface Props { issues: string[] }
+const { issues } = Astro.props;
+---
+{issues.length > 0 && (
+  <div class="preview-banner" role="note">
+    <div class="wrap">
+      <details>
+        <summary>Preview build: {issues.length} item{issues.length === 1 ? '' : 's'} to confirm before launch</summary>
+        <ul>{issues.map((i) => <li>{i}</li>)}</ul>
+      </details>
+    </div>
+  </div>
+)}

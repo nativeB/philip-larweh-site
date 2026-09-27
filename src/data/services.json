@@ -1,0 +1,55 @@
+[
+  {
+    "id": "steel",
+    "title": "Steel bending & iron work",
+    "summary": "Bending and tying reinforcement for slabs, beams, columns and staircases, so the steel is in place and ready for the concrete pour.",
+    "points": [
+      "Slab reinforcement mesh",
+      "Beam and column cages",
+      "Staircase reinforcement"
+    ],
+    "photo": "beam-slab-rebar-worker.jpg",
+    "alt": "Tied reinforcement bars for a beam and slab, laid over a lined deck",
+    "message": "Hello, I found your website. I need steel bending / iron work for a project in [location]. Can we discuss availability and a quote?"
+  },
+  {
+    "id": "carpentry",
+    "title": "Carpentry",
+    "summary": "All carpentry work, from formwork and timber supports on site through to making and installing doors.",
+    "points": [
+      "Formwork, beam boxes and joists",
+      "Doors: made and installed",
+      "Installation work"
+    ],
+    "photo": "roof-level-beam-formwork.jpg",
+    "alt": "Timber beam boxes and joists at roof level on a block building, supported by bamboo props",
+    "message": "Hello, I found your website. I need carpentry work for a project in [location]. Can we discuss availability and a quote?"
+  },
+  {
+    "id": "formwork",
+    "title": "Formwork & floor decking installation",
+    "summary": "Setting up formwork and floor decking for suspended slabs, beams and staircases, propped and ready for steel fixing and concrete.",
+    "points": [
+      "Slab decking",
+      "Beam formwork",
+      "Staircase formwork"
+    ],
+    "photo": "staircase-formwork-rebar.jpg",
+    "alt": "Timber staircase formwork with reinforcement bars tied in place",
+    "message": "Hello, I found your website. I need formwork / floor decking for a project in [location]. Can we discuss availability and a quote?"
+  },
+  {
+    "id": "hire",
+    "title": "Materials for hire",
+    "summary": "Materials for floor decking and formwork: plywood boards, wawa 2/4, wawa boards, bamboo props and column moulds. Delivery available. Ask about quantities, hire period and rates.",
+    "points": [
+      "Plywood boards",
+      "Wawa 2/4 and wawa boards",
+      "Bamboo props and column moulds"
+    ],
+    "photo": "film-faced-plywood-stack.jpg",
+    "alt": "A stack of film-faced plywood boards on a concrete floor",
+    "message": "Hello, I found your website. I would like to hire materials for floor decking/formwork. Items and quantity: [items]. Site location: [location]. Hire period: [dates]. Can you tell me availability and rates?",
+    "link": "#materials"
+  }
+]

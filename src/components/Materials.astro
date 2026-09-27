@@ -1,0 +1,49 @@
+---
+import { Picture } from 'astro:assets';
+import site from '../data/site.json';
+import materials from '../data/materials.json';
+import Icon from './Icon.astro';
+import { photo } from '../lib/photos';
+import { waLink } from '../lib/whatsapp';
+
+const term = site.deckingTerm;
+// Launch build: only items confirmed for hire, and only photos confirmed to show that item.
+const items = materials
+  .filter((m) => !site.launch || m.forHire === true)
+  .map((m) => ({ ...m, photos: m.photos.filter((p) => !site.launch || p.confirmed) }));
+---
+<section class="section" id="materials" aria-labelledby="materials-title">
+  <div class="wrap">
+    <div class="materials-head">
+      <div>
+        <p class="eyebrow">Materials for hire</p>
+        <h2 id="materials-title">Materials for {term} and formwork</h2>
+        <p class="lede">Most of the stock is for {term}. Tell Philip what you need and he will confirm what is available. Some items, such as column moulds, can also be bought.</p>
+      </div>
+      <div class="note">
+        <p><strong>Delivery available.</strong> Enquire for quantities, availability, hire period, delivery or collection, and rates. Prices and stock levels aren't listed here because they change.</p>
+      </div>
+    </div>
+    <div class="mat-list">
+      {items.map((m) => (
+        <article class="mat">
+          {m.photos.length > 0 && (
+            <div class="mat-photos">
+              {m.photos.slice(0, 2).map((p) => (
+                <Picture src={photo(p.file)} alt={p.alt} formats={['avif', 'webp']} widths={[320, 640]} sizes="(min-width: 700px) 25vw, 50vw" loading="lazy" />
+              ))}
+            </div>
+          )}
+          <div class="mat-body">
+            <h3>{m.name} {!site.launch && m.forHire !== true && <span class="todo">Hire status?</span>}</h3>
+            <p>{m.description}</p>
+            {!site.launch && m.photos.some((p) => !p.confirmed) && <p class="mat-q">To confirm with Philip: {m.question}</p>}
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="btn-row" style="margin-top:32px">
+      <a class="btn btn--wa" href={waLink(site.whatsappMessages.hire)} data-track="whatsapp" data-track-context="hire"><Icon name="whatsapp" /> Ask about materials on WhatsApp</a>
+    </div>
+  </div>
+</section>

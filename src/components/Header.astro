@@ -1,0 +1,23 @@
+---
+import site from '../data/site.json';
+import Icon from './Icon.astro';
+import { telLink } from '../lib/whatsapp';
+const links = [
+  ['#services', 'Services'], ['#work', 'Our Work'], ['#materials', 'Materials for Hire'], ['#about', 'About'], ['#contact', 'Contact'],
+];
+---
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label={`${site.name}, back to top`}>
+      <strong>{site.name}</strong>
+      <span>{site.tagline}</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      {links.map(([href, label]) => <a href={href}>{label}</a>)}
+    </nav>
+    <a class="btn btn--call header-call" href={telLink} data-track="call"><Icon name="phone" /> <span>Call</span></a>
+  </div>
+  <nav class="mobile-nav" aria-label="Sections">
+    <div class="wrap">{links.map(([href, label]) => <a href={href}>{label}</a>)}</div>
+  </nav>
+</header>

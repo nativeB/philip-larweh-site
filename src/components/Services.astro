@@ -1,0 +1,31 @@
+---
+import { Picture } from 'astro:assets';
+import services from '../data/services.json';
+import Icon from './Icon.astro';
+import { photo } from '../lib/photos';
+import { waLink } from '../lib/whatsapp';
+---
+<section class="section" id="services" aria-labelledby="services-title">
+  <div class="wrap">
+    <p class="eyebrow">Services</p>
+    <h2 id="services-title">What Philip does on site</h2>
+    <p class="lede">Reinforcement, timber and formwork for concrete buildings, and floor decking and formwork materials for hire.</p>
+    <div class="cards">
+      {services.map((s) => (
+        <article class="card" id={`service-${s.id}`}>
+          <Picture src={photo(s.photo)} alt={s.alt} formats={['avif', 'webp']} widths={[360, 600, 900]} sizes="(min-width: 1100px) 270px, (min-width: 700px) 50vw, 100vw" loading="lazy" />
+          <div class="card-body">
+            <h3>{s.title}</h3>
+            <p>{s.summary}</p>
+            <ul>{s.points.map((p) => <li>{p}</li>)}</ul>
+            {s.link ? (
+              <a class="card-cta" href={s.link}>See materials <Icon name="arrow" /></a>
+            ) : (
+              <a class="card-cta" href={waLink(s.message)} data-track="whatsapp" data-track-context={s.id}>Ask about this on WhatsApp <Icon name="arrow" /></a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

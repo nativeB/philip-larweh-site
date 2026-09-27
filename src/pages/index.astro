@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import PreviewBanner from '../components/PreviewBanner.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Gallery from '../components/Gallery.astro';
+import Materials from '../components/Materials.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+import site from '../data/site.json';
+import gallery from '../data/gallery.json';
+import materials from '../data/materials.json';
+import { launchIssues } from '../lib/launch-status.mjs';
+
+const issues = site.launch ? [] : launchIssues({ site, gallery, materials });
+---
+<Base>
+  <PreviewBanner issues={issues} />
+  <Header />
+  <main id="main">
+    <Hero />
+    <Services />
+    <Gallery />
+    <Materials />
+    <About />
+    <Contact />
+  </main>
+  <Footer />
+  <StickyBar />
+</Base>

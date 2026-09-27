@@ -1,0 +1,37 @@
+---
+import site from '../data/site.json';
+import Icon from './Icon.astro';
+import { waLink, telLink } from '../lib/whatsapp';
+---
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="eyebrow" style="color:#f2c79c">Contact</p>
+      <h2 id="contact-title">Tell us what you need, where the site is, and when you need it.</h2>
+      <p class="lede">WhatsApp is the quickest way to reach Philip. It helps to include:</p>
+      <ul class="checklist">
+        <li>The service or materials you need</li>
+        <li>Where the site is</li>
+        <li>Rough size or quantity</li>
+        <li>When you need it</li>
+      </ul>
+      <div class="btn-row">
+        <a class="btn btn--wa" href={waLink()} data-track="whatsapp" data-track-context="contact"><Icon name="whatsapp" /> Chat on WhatsApp</a>
+        <a class="btn btn--light" href={telLink} data-track="call" data-track-context="contact"><Icon name="phone" /> Call {site.phoneDisplay}</a>
+      </div>
+    </div>
+    <div class="contact-card">
+      <dl>
+        <div><dt>WhatsApp &amp; phone</dt><dd><a href={telLink} data-track="call" data-track-context="contact-card">{site.phoneDisplay}</a></dd></div>
+        <div><dt>Based in</dt><dd>{site.baseLocation}</dd></div>
+        <div><dt>Service area</dt><dd>{site.serviceArea}</dd></div>
+        {site.hours && <div><dt>Hours</dt><dd>{site.hours}</dd></div>}
+        {site.jijiUrl ? (
+          <div><dt>Also on Jiji</dt><dd><a href={site.jijiUrl} target="_blank" rel="noopener" data-track="jiji">View Jiji listing <Icon name="external" /></a></dd></div>
+        ) : !site.launch && (
+          <div><dt>Also on Jiji</dt><dd><span class="todo">Jiji link to add</span></dd></div>
+        )}
+      </dl>
+    </div>
+  </div>
+</section>

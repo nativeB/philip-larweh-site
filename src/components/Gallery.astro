@@ -1,0 +1,125 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import site from '../data/site.json';
+import gallery from '../data/gallery.json';
+import Icon from './Icon.astro';
+import { photo } from '../lib/photos';
+
+type Item = (typeof gallery)[number] & { permissionConfirmed?: boolean };
+// In the launch build, photos showing people are hidden until permission is recorded.
+const items = (gallery as Item[]).filter((g) => !site.launch || !g.people || g.permissionConfirmed);
+const categories = [
+  ['all', 'All'], ['steel', 'Steel bending'], ['formwork', 'Formwork & decking'], ['carpentry', 'Carpentry'],
+].filter(([id]) => id === 'all' || items.some((g) => g.category === id));
+
+const tiles = await Promise.all(items.map(async (g) => {
+  const src = photo(g.file);
+  const full = await getImage({ src, width: Math.min(1400, src.width), format: 'webp', quality: 78 });
+  return { ...g, src, full: full.src };
+}));
+const INITIAL = 12;
+const featuredFirst = [...tiles.filter((t) => t.featured), ...tiles.filter((t) => !t.featured)];
+---
+<section class="section section--alt" id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <p class="eyebrow">Our work</p>
+    <h2 id="work-title">Photos from site</h2>
+    <p class="lede">Real photos from building sites Philip has worked on. Tap a photo to see it larger.</p>
+    <div class="filters" role="group" aria-label="Filter photos by type of work">
+      {categories.map(([id, label], i) => <button type="button" data-filter={id} aria-pressed={i === 0 ? 'true' : 'false'}>{label}</button>)}
+    </div>
+    <ul class="grid" role="list" style="list-style:none;padding:0;margin:0">
+      {featuredFirst.map((t, i) => (
+        <li class="tile" data-category={t.category} data-extra={i >= INITIAL ? '' : undefined} hidden={i >= INITIAL}>
+          <figure style="margin:0">
+            <button type="button" data-full={t.full} data-caption={t.caption} data-alt={t.alt} aria-label={`View larger: ${t.caption}`}>
+              <Picture src={t.src} alt={t.alt} formats={['avif', 'webp']} widths={[320, 640]} sizes="(min-width: 1100px) 270px, (min-width: 700px) 33vw, 50vw" loading="lazy" />
+            </button>
+            <figcaption>{t.caption}</figcaption>
+          </figure>
+          {!site.launch && t.people && !t.permissionConfirmed && <span class="todo">Permission?</span>}
+        </li>
+      ))}
+    </ul>
+    {featuredFirst.length > INITIAL && (
+      <div class="more"><button type="button" class="btn btn--ghost" id="show-more">Show {featuredFirst.length - INITIAL} more photos</button></div>
+    )}
+  </div>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+    <button type="button" class="lb-btn lb-close" data-lb="close" aria-label="Close"><Icon name="close" /></button>
+    <div class="lb-stage"><img alt="" id="lb-img" /></div>
+    <div class="lb-bar">
+      <button type="button" class="lb-btn" data-lb="prev" aria-label="Previous photo"><Icon name="prev" /></button>
+      <p class="lb-caption" id="lb-caption" aria-live="polite"></p>
+      <button type="button" class="lb-btn" data-lb="next" aria-label="Next photo"><Icon name="next" /></button>
+    </div>
+  </dialog>
+</section>
+
+<script>
+  const grid = document.querySelector<HTMLElement>('#work .grid')!;
+  const tiles = () => [...grid.querySelectorAll<HTMLLIElement>('.tile')];
+  const moreBtn = document.getElementById('show-more');
+  let expanded = false;
+  let filter = 'all';
+
+  function apply() {
+    for (const t of tiles()) {
+      const matches = filter === 'all' || t.dataset.category === filter;
+      const collapsed = filter === 'all' && !expanded && t.dataset.extra !== undefined;
+      t.hidden = !matches || collapsed;
+    }
+    if (moreBtn) moreBtn.parentElement!.hidden = expanded || filter !== 'all';
+  }
+  document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => b.addEventListener('click', () => {
+    filter = b.dataset.filter!;
+    document.querySelectorAll('[data-filter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    apply();
+  }));
+  moreBtn?.addEventListener('click', () => { expanded = true; apply(); });
+
+  // Lightbox
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement;
+  const img = document.getElementById('lb-img') as HTMLImageElement;
+  const cap = document.getElementById('lb-caption')!;
+  let current = 0;
+  let opener: HTMLElement | null = null;
+  const visibleButtons = () => tiles().filter((t) => !t.hidden).map((t) => t.querySelector('button')!);
+
+  function show(i: number) {
+    const list = visibleButtons();
+    current = (i + list.length) % list.length;
+    const b = list[current];
+    img.src = b.dataset.full!;
+    img.alt = b.dataset.alt!;
+    cap.textContent = `${b.dataset.caption} (${current + 1} of ${list.length})`;
+  }
+  grid.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('.tile button');
+    if (!b) return;
+    opener = b;
+    show(visibleButtons().indexOf(b));
+    dlg.showModal();
+  });
+  dlg.addEventListener('click', (e) => {
+    const action = (e.target as HTMLElement).closest<HTMLElement>('[data-lb]')?.dataset.lb;
+    if (action === 'close') dlg.close();
+    else if (action === 'prev') show(current - 1);
+    else if (action === 'next') show(current + 1);
+    else if (e.target === dlg || (e.target as HTMLElement).classList.contains('lb-stage')) dlg.close();
+  });
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); show(current + 1); }
+  });
+  dlg.addEventListener('close', () => { img.removeAttribute('src'); opener?.focus(); });
+  let x0: number | null = null;
+  dlg.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+  dlg.addEventListener('touchend', (e) => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
+</script>

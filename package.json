@@ -1,0 +1,23 @@
+{
+  "name": "philip-larweh-site",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "photos": "node scripts/copy-photos.mjs",
+    "check:launch": "node scripts/check-launch.mjs",
+    "build:prod": "node scripts/check-launch.mjs && astro build",
+    "inventory": "node scripts/inventory.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "~3.7.4",
+    "astro": "~5.18.2",
+    "sharp": "^0.35.5"
+  },
+  "engines": {
+    "node": ">=20.3"
+  }
+}

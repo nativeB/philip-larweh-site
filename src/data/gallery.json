@@ -1,0 +1,151 @@
+[
+  {
+    "file": "slab-rebar-film-faced-deck.jpg",
+    "category": "steel",
+    "featured": true,
+    "people": false,
+    "alt": "Wide suspended slab with reinforcement mesh and beam cages tied over film-faced plywood decking",
+    "caption": "Slab and beam reinforcement over plywood decking"
+  },
+  {
+    "file": "beam-formwork-bamboo-props.jpg",
+    "category": "formwork",
+    "featured": true,
+    "people": false,
+    "alt": "Timber beam formwork on dense bamboo props, with reinforcement cages laid along the beams",
+    "caption": "Beam formwork on bamboo props, with steel in place"
+  },
+  {
+    "file": "staircase-formwork-rebar.jpg",
+    "category": "formwork",
+    "featured": true,
+    "people": false,
+    "alt": "Timber staircase formwork with tied reinforcement running up the flight",
+    "caption": "Staircase formwork and reinforcement"
+  },
+  {
+    "file": "tying-beam-cage.jpg",
+    "category": "steel",
+    "featured": true,
+    "people": true,
+    "alt": "Two workers tying a reinforcement beam cage on a concrete slab, with column starter bars behind",
+    "caption": "Tying a beam cage on site",
+    "permissionConfirmed": true
+  },
+  {
+    "file": "roof-level-beam-formwork.jpg",
+    "category": "carpentry",
+    "featured": true,
+    "people": false,
+    "alt": "Timber beam boxes and joists at roof level on a block building, supported by bamboo props",
+    "caption": "Beam boxes and joists at roof level"
+  },
+  {
+    "file": "slab-mesh-film-faced-deck.jpg",
+    "category": "steel",
+    "featured": true,
+    "people": false,
+    "alt": "Reinforcement mesh and beam bars over a film-faced plywood deck in bright sunlight",
+    "caption": "Slab mesh on plywood decking"
+  },
+  {
+    "file": "single-storey-slab-formwork.jpg",
+    "category": "formwork",
+    "featured": true,
+    "people": false,
+    "alt": "Slab formwork across several bays of a single-storey building, propped with bamboo",
+    "caption": "Slab formwork over several bays"
+  },
+  {
+    "file": "team-on-slab-rebar.jpg",
+    "category": "steel",
+    "featured": true,
+    "people": true,
+    "alt": "Four workers standing on slab reinforcement above timber beam formwork on an upper floor",
+    "caption": "Upper-floor slab reinforcement",
+    "permissionConfirmed": true
+  },
+  {
+    "file": "worker-on-beam-formwork.jpg",
+    "category": "carpentry",
+    "featured": true,
+    "people": true,
+    "alt": "A worker seated on timber joists above beam formwork held up by bamboo props",
+    "caption": "Joists and beam formwork",
+    "permissionConfirmed": true
+  },
+  {
+    "file": "upper-floor-slab-deck.jpg",
+    "category": "formwork",
+    "featured": true,
+    "people": false,
+    "alt": "Upper-floor slab deck lined with polythene, with beam cages and timber formwork beyond",
+    "caption": "Slab deck lined and ready for steel"
+  },
+  {
+    "file": "slab-rebar-plywood-deck.jpg",
+    "category": "steel",
+    "featured": true,
+    "people": false,
+    "alt": "Slab bars and bar chairs laid over a plywood deck beside a busy road",
+    "caption": "Slab bars and chairs over plywood decking"
+  },
+  {
+    "file": "ramp-rebar-block-pit.jpg",
+    "category": "steel",
+    "featured": true,
+    "people": false,
+    "alt": "Reinforcement for a sloping slab running down into a block-walled pit",
+    "caption": "Reinforcement for a sloping slab"
+  },
+  {
+    "file": "multistorey-slab-mesh.jpg",
+    "category": "steel",
+    "featured": false,
+    "people": false,
+    "alt": "Reinforcement mesh on a multi-storey slab, with houses and a tall building in the distance",
+    "caption": "Multi-storey slab reinforcement"
+  },
+  {
+    "file": "beam-slab-rebar-worker.jpg",
+    "category": "steel",
+    "featured": false,
+    "people": false,
+    "alt": "Beam and slab reinforcement over a lined deck, with bamboo props visible below",
+    "caption": "Beam and slab reinforcement"
+  },
+  {
+    "file": "fixing-formwork-timbers.jpg",
+    "category": "carpentry",
+    "featured": false,
+    "people": true,
+    "alt": "A worker fixing timber formwork members at the edge of a building",
+    "caption": "Fixing formwork timbers",
+    "permissionConfirmed": true
+  },
+  {
+    "file": "column-cage-rooftop.jpg",
+    "category": "steel",
+    "featured": false,
+    "people": true,
+    "alt": "Two workers on a rooftop beside column and beam reinforcement cages",
+    "caption": "Column and beam cages on a rooftop",
+    "permissionConfirmed": true
+  },
+  {
+    "file": "slab-mesh-conduits-upper-floor.jpg",
+    "category": "steel",
+    "featured": false,
+    "people": false,
+    "alt": "Upper-floor slab reinforcement with electrical conduits laid through the mesh, telecom mast in the distance",
+    "caption": "Slab reinforcement with conduits in place"
+  },
+  {
+    "file": "slab-mesh-beam-cages-rooftops.jpg",
+    "category": "steel",
+    "featured": false,
+    "people": false,
+    "alt": "Slab mesh and beam cages on an upper floor overlooking rooftops and a road",
+    "caption": "Upper-floor slab and beam reinforcement"
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "launch": false,
+  "name": "Philip Larweh",
+  "tagline": "Steel bending, carpentry & formwork",
+  "headline": "Steel bending, carpentry & formwork you can count on",
+  "whatsapp": "233244439582",
+  "phone": "+233244439582",
+  "phoneDisplay": "+233 24 443 9582",
+  "baseLocation": "Kasoa",
+  "serviceArea": "Available for projects across Ghana — contact us to discuss your location and requirements.",
+  "deckingTerm": "floor decking",
+  "jijiUrl": "",
+  "hours": "Standard working hours",
+  "social": [],
+  "domain": null,
+  "structuredData": false,
+  "analytics": null,
+  "about": {
+    "confirmed": true,
+    "portrait": null,
+    "paragraphs": [
+      "Philip Larweh is a construction tradesperson based in Kasoa. He does steel bending, all kinds of carpentry, from site formwork to making and installing doors, and formwork and floor decking for building projects.",
+      "He also hires out materials for floor decking and formwork, with delivery available. The photos on this page were taken by Philip on his own jobs.",
+      "If you have a project coming up, send him a message with what you need, where the site is and when you need it."
+    ]
+  },
+  "whatsappMessages": {
+    "general": "Hello, I found your website. I need help with [service] for a project in [location]. Rough scope: [size/quantity]. Timeline: [when]. Can we discuss availability and a quote?",
+    "hire": "Hello, I found your website. I would like to hire materials for floor decking/formwork. Items and quantity: [items]. Site location: [location]. Hire period: [dates]. Can you tell me availability and rates?"
+  }
+}

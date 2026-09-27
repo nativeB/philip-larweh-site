@@ -1,0 +1,18 @@
+---
+import site from '../data/site.json';
+import { waLink, telLink } from '../lib/whatsapp';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <p style="margin:0"><strong>{site.name}</strong>: {site.tagline.toLowerCase()}, and {site.deckingTerm} materials for hire.</p>
+    <p style="margin:0">Based in {site.baseLocation}. {site.serviceArea}</p>
+    <p style="margin:0">
+      <a href={waLink()} data-track="whatsapp" data-track-context="footer">WhatsApp</a> ·
+      <a href={telLink} data-track="call" data-track-context="footer">{site.phoneDisplay}</a>
+      {site.jijiUrl && <> · <a href={site.jijiUrl} target="_blank" rel="noopener" data-track="jiji">Jiji</a></>}
+      {site.social.map((s: { label: string; url: string }) => <> · <a href={s.url} target="_blank" rel="noopener">{s.label}</a></>)}
+    </p>
+    <p style="margin:0">© {year} {site.name}</p>
+  </div>
+</footer>

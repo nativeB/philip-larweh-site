@@ -1,0 +1,66 @@
+---
+import { getImage } from 'astro:assets';
+import site from '../data/site.json';
+import { photo } from '../lib/photos';
+import '../styles/global.css';
+
+const title = `${site.name} | Steel Bending, Carpentry, Formwork & ${site.deckingTerm.replace(/\b\w/g, (c) => c.toUpperCase())} Materials, ${site.baseLocation}`;
+const description = `${site.name}: steel bending, carpentry, formwork and ${site.deckingTerm} installation, plus ${site.deckingTerm} and formwork materials for hire. Based in ${site.baseLocation}, available for projects across Ghana. Chat on WhatsApp or call ${site.phoneDisplay}.`;
+const og = await getImage({ src: photo('slab-rebar-film-faced-deck.jpg'), width: 1040, format: 'jpg', quality: 75 });
+const base = Astro.site;
+const ogUrl = base ? new URL(og.src, base).href : og.src;
+const canonical = base ? new URL('/', base).href : null;
+
+type Analytics = { provider: 'plausible'; domain: string } | { provider: 'goatcounter'; code: string } | null;
+const analytics = site.analytics as Analytics;
+
+// Structured data only once the business facts and domain are confirmed (no ratings, no invented address).
+const jsonLd = site.structuredData && base ? {
+  '@context': 'https://schema.org', '@type': 'GeneralContractor', name: site.name, url: canonical,
+  telephone: site.phone, image: ogUrl, areaServed: 'Ghana',
+  address: { '@type': 'PostalAddress', addressLocality: site.baseLocation, addressCountry: 'GH' },
+  ...(site.jijiUrl ? { sameAs: [site.jijiUrl] } : {}),
+} : null;
+---
+<!doctype html>
+<html lang="en-GH">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {!site.launch && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#1d1a17" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogUrl} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    {analytics?.provider === 'plausible' && <script defer data-domain={analytics.domain} src="https://plausible.io/js/script.js" />}
+    {analytics?.provider === 'goatcounter' && <script data-goatcounter={`https://${analytics.code}.goatcounter.com/count`} async src="//gc.zgo.at/count.js" />}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <slot />
+    <script>
+      // Privacy-conscious click tracking: records only the link type and page position, never message text.
+      // Sends nothing unless an analytics provider is configured in site.json.
+      document.addEventListener('click', (e) => {
+        const a = (e.target as HTMLElement).closest<HTMLElement>('[data-track]');
+        if (!a) return;
+        const name = `click-${a.dataset.track}`;
+        const context = a.dataset.trackContext ?? 'other';
+        const w = window as any;
+        if (typeof w.plausible === 'function') w.plausible(name, { props: { context } });
+        else if (w.goatcounter?.count) w.goatcounter.count({ path: `${name}/${context}`, title: name, event: true });
+      });
+    </script>
+  </body>
+</html>

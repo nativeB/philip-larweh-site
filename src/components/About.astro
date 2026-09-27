@@ -1,0 +1,25 @@
+---
+import { Picture } from 'astro:assets';
+import site from '../data/site.json';
+import services from '../data/services.json';
+import { photo } from '../lib/photos';
+
+// Use Philip's portrait once he supplies one and agrees to its use; until then, a work photo.
+const img = site.about.portrait ?? 'single-storey-slab-formwork.jpg';
+const alt = site.about.portrait ? `${site.name} on site` : 'Slab formwork across several bays of a single-storey building, propped with bamboo';
+---
+<section class="section section--alt" id="about" aria-labelledby="about-title">
+  <div class="wrap about">
+    <div>
+      <Picture src={photo(img)} alt={alt} formats={['avif', 'webp']} widths={[400, 800]} sizes="(min-width: 900px) 540px, 100vw" loading="lazy" />
+          </div>
+    <div>
+      <p class="eyebrow">About</p>
+      <h2 id="about-title">About {site.name}</h2>
+      {!site.launch && !site.about.confirmed && <p><span class="todo">Draft intro: replace with Philip's own words</span></p>}
+      {site.about.paragraphs.map((p) => <p>{p}</p>)}
+      <p><strong>Services:</strong></p>
+      <ul>{services.map((s) => <li>{s.title}</li>)}</ul>
+    </div>
+  </div>
+</section>

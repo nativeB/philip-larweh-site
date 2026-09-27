@@ -1,0 +1,8 @@
+---
+import Icon from './Icon.astro';
+import { waLink, telLink } from '../lib/whatsapp';
+---
+<div class="sticky-bar" aria-label="Quick contact">
+  <a class="btn btn--wa" href={waLink()} data-track="whatsapp" data-track-context="sticky"><Icon name="whatsapp" /> WhatsApp</a>
+  <a class="btn btn--call" href={telLink} data-track="call" data-track-context="sticky"><Icon name="phone" /> Call</a>
+</div>

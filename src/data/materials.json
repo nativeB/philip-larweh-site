@@ -1,0 +1,77 @@
+[
+  {
+    "id": "plywood",
+    "name": "Plywood boards",
+    "forHire": true,
+    "description": "Plywood boards for decking and formwork faces: dark film-faced, red-faced and green film-faced.",
+    "photos": [
+      {
+        "file": "film-faced-plywood-stack.jpg",
+        "confirmed": true,
+        "alt": "A stack of dark film-faced plywood boards on a concrete floor"
+      },
+      {
+        "file": "red-plywood-stack.jpg",
+        "confirmed": true,
+        "alt": "A stack of red-faced plywood boards"
+      },
+      {
+        "file": "green-film-faced-plywood.jpg",
+        "confirmed": true,
+        "alt": "A stack of green film-faced plywood boards"
+      }
+    ]
+  },
+  {
+    "id": "wawa-2-4",
+    "name": "Wawa 2/4",
+    "forHire": true,
+    "description": "Wawa timber in 2/4, used for joists and supports under floor decking and formwork.",
+    "photos": [
+      {
+        "file": "timber-battens.jpg",
+        "confirmed": true,
+        "alt": "A pile of wawa 2/4 timber against a block wall"
+      }
+    ]
+  },
+  {
+    "id": "wawa-boards",
+    "name": "Wawa boards",
+    "forHire": true,
+    "description": "Wide rough-sawn wawa boards for formwork.",
+    "photos": [
+      {
+        "file": "rough-sawn-boards.jpg",
+        "confirmed": true,
+        "alt": "A stack of rough-sawn wawa boards against a block wall"
+      }
+    ]
+  },
+  {
+    "id": "bamboo",
+    "name": "Bamboo props",
+    "forHire": true,
+    "description": "Bamboo poles for propping floor decking and beam formwork.",
+    "photos": [
+      {
+        "file": "bamboo-poles.jpg",
+        "confirmed": true,
+        "alt": "A heap of bamboo props on open ground"
+      }
+    ]
+  },
+  {
+    "id": "column-moulds",
+    "name": "Round column moulds",
+    "forHire": true,
+    "description": "Plastic moulds for round concrete columns. Available to hire or buy.",
+    "photos": [
+      {
+        "file": "plastic-column-moulds.jpg",
+        "confirmed": true,
+        "alt": "Stacked plastic round-column moulds beside a finished round concrete column"
+      }
+    ]
+  }
+]
