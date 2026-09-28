@@ -3,7 +3,7 @@
 `npm run check:launch` lists what is still open.
 
 ## Still needed
-- [ ] **Jiji URL**: post the listing (see `docs/JIJI_POST.md`), then paste the URL into `jijiUrl` in `src/data/site.json`.
+- [x] Jiji listing added and site launched (2026-09-28)
 - [x] Domain: philip-larweh-site.vercel.app (swap for a custom domain later if wanted)
 - [ ] Optional: social links, testimonials/credentials he's happy to publish, analytics, and whether to enable GeneralContractor structured data (`structuredData: true`).
 
