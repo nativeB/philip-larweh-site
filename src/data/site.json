@@ -27,5 +27,6 @@
   "whatsappMessages": {
     "general": "Hello, I found your website. I need help with [service] for a project in [location]. Rough scope: [size/quantity]. Timeline: [when]. Can we discuss availability and a quote?",
     "hire": "Hello, I found your website. I would like to hire materials for floor decking/formwork. Items and quantity: [items]. Site location: [location]. Hire period: [dates]. Can you tell me availability and rates?"
-  }
+  },
+  "googleSiteVerification": "SMStuB7gEpHdteCdp6PjWbV9pePMJKztr6I9EkpUKq4"
 }

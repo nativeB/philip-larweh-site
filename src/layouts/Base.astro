@@ -31,6 +31,7 @@ const jsonLd = site.structuredData && base ? {
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
     {!site.launch && <meta name="robots" content="noindex" />}
+    {site.googleSiteVerification && <meta name="google-site-verification" content={site.googleSiteVerification} />}
     <meta name="theme-color" content="#1d1a17" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
