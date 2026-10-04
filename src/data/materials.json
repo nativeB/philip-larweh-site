@@ -20,7 +20,8 @@
         "confirmed": true,
         "alt": "A stack of green film-faced plywood boards"
       }
-    ]
+    ],
+    "page": "/materials/plywood/"
   },
   {
     "id": "wawa-2-4",
@@ -33,7 +34,8 @@
         "confirmed": true,
         "alt": "A pile of wawa 2/4 timber against a block wall"
       }
-    ]
+    ],
+    "page": "/materials/wawa/"
   },
   {
     "id": "wawa-boards",
@@ -46,7 +48,8 @@
         "confirmed": true,
         "alt": "A stack of rough-sawn wawa boards against a block wall"
       }
-    ]
+    ],
+    "page": "/materials/wawa/"
   },
   {
     "id": "bamboo",
@@ -59,7 +62,8 @@
         "confirmed": true,
         "alt": "A heap of bamboo props on open ground"
       }
-    ]
+    ],
+    "page": "/materials/bamboo-props/"
   },
   {
     "id": "column-moulds",
@@ -72,6 +76,7 @@
         "confirmed": true,
         "alt": "Stacked plastic round-column moulds beside a finished round concrete column"
       }
-    ]
+    ],
+    "page": "/materials/column-moulds/"
   }
 ]

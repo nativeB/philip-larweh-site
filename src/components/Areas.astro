@@ -1,0 +1,15 @@
+---
+import { pagesByKind, pageUrl } from '../lib/pages';
+const areas = await pagesByKind('area');
+---
+<section class="section" id="areas" aria-labelledby="areas-title">
+  <div class="wrap">
+    <p class="eyebrow">Areas we serve</p>
+    <h2 id="areas-title">Based in Kasoa, working across Ghana</h2>
+    <p class="lede">Steel bending, carpentry, formwork and materials for hire, with delivery. Travel is included in the quote.</p>
+    <ul class="areas-list" role="list">
+      {areas.map((a) => <li><a href={pageUrl(a.id)}>{a.data.label}</a></li>)}
+      <li><a href="/areas/">Anywhere in Ghana</a></li>
+    </ul>
+  </div>
+</section>

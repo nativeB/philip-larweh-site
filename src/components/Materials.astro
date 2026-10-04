@@ -17,7 +17,7 @@ const items = materials
     <div class="materials-head">
       <div>
         <p class="eyebrow">Materials for hire</p>
-        <h2 id="materials-title">Materials for {term} and formwork</h2>
+        <h2 id="materials-title"><a href="/materials/" style="color:inherit;text-decoration:none">Materials for {term} and formwork</a></h2>
         <p class="lede">Most of the stock is for {term}. Tell Philip what you need and he will confirm what is available. Some items, such as column moulds, can also be bought.</p>
       </div>
       <div class="note">
@@ -38,6 +38,7 @@ const items = materials
             <h3>{m.name} {!site.launch && m.forHire !== true && <span class="todo">Hire status?</span>}</h3>
             <p>{m.description}</p>
             {!site.launch && m.photos.some((p) => !p.confirmed) && <p class="mat-q">To confirm with Philip: {m.question}</p>}
+            <a class="mat-more" href={m.page}>More about {m.name.toLowerCase().startsWith('wawa') ? m.name : m.name.toLowerCase()} →</a>
           </div>
         </article>
       ))}

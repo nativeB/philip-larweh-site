@@ -18,11 +18,10 @@ import { waLink } from '../lib/whatsapp';
             <h3>{s.title}</h3>
             <p>{s.summary}</p>
             <ul>{s.points.map((p) => <li>{p}</li>)}</ul>
-            {s.link ? (
-              <a class="card-cta" href={s.link}>See materials <Icon name="arrow" /></a>
-            ) : (
-              <a class="card-cta" href={waLink(s.message)} data-track="whatsapp" data-track-context={s.id}>Ask about this on WhatsApp <Icon name="arrow" /></a>
-            )}
+            <div class="card-links">
+              <a class="card-cta" href={s.page}>{s.id === 'hire' ? 'See materials' : 'Learn more'} <Icon name="arrow" /></a>
+              {s.id !== 'hire' && <a class="card-cta" href={waLink(s.message)} data-track="whatsapp" data-track-context={s.id}>WhatsApp</a>}
+            </div>
           </div>
         </article>
       ))}

@@ -1,0 +1,152 @@
+---
+import { Picture } from 'astro:assets';
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+import Icon from '../components/Icon.astro';
+import site from '../data/site.json';
+import { photo } from '../lib/photos';
+import { waLink, telLink } from '../lib/whatsapp';
+import { pageUrl, pagesByKind, type Page } from '../lib/pages';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({ params: { slug: pageUrl(page.id).slice(1, -1) }, props: { page } }));
+}
+
+const { page } = Astro.props as { page: Page };
+const d = page.data;
+const { Content } = await render(page);
+const children = d.kind === 'materials-hub' ? await pagesByKind('material') : d.kind === 'areas-hub' ? await pagesByKind('area') : [];
+const related = (await Promise.all(d.related.map((id) => getEntry('pages', id)))).filter(Boolean) as Page[];
+
+// Breadcrumbs: Home › section hub (if any) › this page
+const hubs: Record<string, [string, string]> = {
+  service: ['/#services', 'Services'], material: ['/materials/', 'Materials for hire'], area: ['/areas/', 'Areas we serve'],
+};
+const crumbs: [string, string][] = [['/', 'Home'], ...(hubs[d.kind] ? [hubs[d.kind]] : []), [pageUrl(page.id), d.label]];
+
+const base = Astro.site;
+const abs = (path: string) => (base ? new URL(path, base).href : path);
+const business = { '@id': abs('/#business') };
+const schema: Record<string, unknown>[] = [
+  { '@type': 'BreadcrumbList', itemListElement: crumbs.map(([href, name], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(href) })) },
+];
+if (d.kind === 'guide') {
+  schema.push({ '@type': 'Article', headline: d.h1, description: d.description, author: { '@type': 'Person', name: site.name }, publisher: business, mainEntityOfPage: abs(pageUrl(page.id)) });
+} else {
+  schema.push({
+    '@type': 'Service', name: d.h1, description: d.description, provider: business, url: abs(pageUrl(page.id)),
+    areaServed: d.place ? { '@type': 'Place', name: `${d.place}, Ghana` } : { '@type': 'Country', name: 'Ghana' },
+  });
+}
+---
+<Base title={d.metaTitle} description={d.description} image={d.hero.file} schema={schema}>
+  <Header />
+  <main id="main">
+    <nav class="crumbs wrap" aria-label="Breadcrumb">
+      <ol>{crumbs.map(([href, name], i) => <li>{i < crumbs.length - 1 ? <a href={href}>{name}</a> : <span aria-current="page">{name}</span>}</li>)}</ol>
+    </nav>
+
+    <section class="page-hero">
+      <div class="wrap page-hero-grid">
+        <div>
+          <p class="eyebrow">{d.eyebrow}</p>
+          <h1>{d.h1}</h1>
+          <p class="lede">{d.lede}</p>
+          <div class="btn-row">
+            <a class="btn btn--wa" href={waLink(d.message)} data-track="whatsapp" data-track-context={page.id}><Icon name="whatsapp" /> Chat on WhatsApp</a>
+            <a class="btn btn--ghost" href={telLink} data-track="call" data-track-context={page.id}><Icon name="phone" /> Call {site.phoneDisplay}</a>
+          </div>
+        </div>
+        <Picture src={photo(d.hero.file)} alt={d.hero.alt} formats={['avif', 'webp']} widths={[480, 800, 1040]} sizes="(min-width: 900px) 520px, 100vw" loading="eager" fetchpriority="high" class="page-hero-img" />
+      </div>
+    </section>
+
+    <section class="section page-body">
+      <div class="wrap page-body-grid">
+        <article class="prose"><Content /></article>
+        <aside class="side-card" aria-label="Get a quote">
+          <h2>Get a quote</h2>
+          <p>Send Philip:</p>
+          <ul>
+            <li>What you need</li>
+            <li>Where the site is</li>
+            <li>Rough size or quantity</li>
+            <li>When you need it</li>
+          </ul>
+          <a class="btn btn--wa" href={waLink(d.message)} data-track="whatsapp" data-track-context={`${page.id}-side`}><Icon name="whatsapp" /> WhatsApp Philip</a>
+          <p class="side-meta">Based in {site.baseLocation} · Available across Ghana · Delivery available for materials</p>
+        </aside>
+      </div>
+    </section>
+
+    {children.length > 0 && (
+      <section class="section section--alt" aria-labelledby="children-title">
+        <div class="wrap">
+          <h2 id="children-title">{d.kind === 'materials-hub' ? 'Materials available' : 'Areas Philip covers'}</h2>
+          <ul class="child-cards" role="list">
+            {children.map((c) => (
+              <li><a href={pageUrl(c.id)}>
+                <Picture src={photo(c.data.hero.file)} alt="" formats={['avif', 'webp']} widths={[360, 720]} sizes="(min-width: 900px) 360px, 100vw" loading="lazy" />
+                <span class="child-body"><strong>{c.data.label}</strong><span>{c.data.lede}</span><span class="child-more">More <Icon name="arrow" /></span></span>
+              </a></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    {d.photos.length > 0 && (
+      <section class="section section--alt" aria-labelledby="photos-title">
+        <div class="wrap">
+          <h2 id="photos-title">Photos from Philip's jobs</h2>
+          <ul class="photo-grid" role="list">
+            {d.photos.map((p) => (
+              <li><figure>
+                <Picture src={photo(p.file)} alt={p.alt} formats={['avif', 'webp']} widths={[360, 720]} sizes="(min-width: 900px) 360px, (min-width: 600px) 50vw, 100vw" loading="lazy" />
+                {p.caption && <figcaption>{p.caption}</figcaption>}
+              </figure></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    {d.faqs.length > 0 && (
+      <section class="section" aria-labelledby="faq-title">
+        <div class="wrap narrow">
+          <h2 id="faq-title">Questions people ask</h2>
+          <div class="faq">
+            {d.faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {related.length > 0 && (
+      <section class="section section--alt" aria-labelledby="related-title">
+        <div class="wrap">
+          <h2 id="related-title">Related</h2>
+          <ul class="related" role="list">
+            {related.map((r) => <li><a href={pageUrl(r.id)}><strong>{r.data.label}</strong><span>{r.data.lede}</span></a></li>)}
+          </ul>
+        </div>
+      </section>
+    )}
+
+    <section class="cta-band">
+      <div class="wrap">
+        <h2>Tell us what you need, where the site is, and when you need it.</h2>
+        <div class="btn-row">
+          <a class="btn btn--wa" href={waLink(d.message)} data-track="whatsapp" data-track-context={`${page.id}-band`}><Icon name="whatsapp" /> Chat on WhatsApp</a>
+          <a class="btn btn--light" href={telLink} data-track="call" data-track-context={`${page.id}-band`}><Icon name="phone" /> Call now</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <StickyBar />
+</Base>

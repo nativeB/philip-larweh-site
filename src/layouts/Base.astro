@@ -5,12 +5,27 @@ import { photo } from '../lib/photos';
 import '../styles/global.css';
 
 // Kept under ~60 characters so Google doesn't truncate it.
-const title = `${site.name} – Steel Bending, Carpentry & Formwork in ${site.baseLocation}`;
-const description = `${site.name}: steel bending, carpentry, formwork and ${site.deckingTerm} installation, plus ${site.deckingTerm} and formwork materials for hire. Based in ${site.baseLocation}, available for projects across Ghana. Chat on WhatsApp or call ${site.phoneDisplay}.`;
-const og = await getImage({ src: photo('slab-rebar-film-faced-deck.jpg'), width: 1040, format: 'jpg', quality: 75 });
+interface Props {
+  /** Full <title>; defaults to the homepage title. Keep under ~60 characters. */
+  title?: string;
+  description?: string;
+  /** Filename in src/assets/photos used for the Open Graph image. */
+  image?: string;
+  /** Extra schema.org nodes for this page (Service, BreadcrumbList, ...). */
+  schema?: Record<string, unknown>[];
+}
+const homeDescription = `${site.name}: steel bending, carpentry, formwork and ${site.deckingTerm} installation, plus ${site.deckingTerm} and formwork materials for hire. Based in ${site.baseLocation}, available for projects across Ghana. Chat on WhatsApp or call ${site.phoneDisplay}.`;
+const {
+  title = `${site.name} – Steel Bending, Carpentry & Formwork in ${site.baseLocation}`,
+  description = homeDescription,
+  image = 'slab-rebar-film-faced-deck.jpg',
+  schema = [],
+} = Astro.props;
+const og = await getImage({ src: photo(image), width: 1040, format: 'jpg', quality: 75 });
 const base = Astro.site;
 const ogUrl = base ? new URL(og.src, base).href : og.src;
-const canonical = base ? new URL('/', base).href : null;
+const home = base ? new URL('/', base).href : null;
+const canonical = base ? new URL(Astro.url.pathname, base).href : null;
 
 type Analytics = { provider: 'plausible'; domain: string } | { provider: 'goatcounter'; code: string } | null;
 const analytics = site.analytics as Analytics;
@@ -18,14 +33,15 @@ const analytics = site.analytics as Analytics;
 // WebSite markup tells Google the site's name (otherwise it shows the host, "Vercel").
 // Business markup only once the facts are confirmed: no ratings, no invented street address.
 const graph = base ? [
-  { '@type': 'WebSite', '@id': `${canonical}#website`, name: site.name, alternateName: [`${site.name} Construction`, 'Philip Larweh Formwork'], url: canonical },
+  { '@type': 'WebSite', '@id': `${home}#website`, name: site.name, alternateName: [`${site.name} Construction`, 'Philip Larweh Formwork'], url: home },
   ...(site.structuredData ? [{
-    '@type': 'HomeAndConstructionBusiness', '@id': `${canonical}#business`, name: site.name, url: canonical,
-    description, telephone: site.phone, image: ogUrl,
+    '@type': 'HomeAndConstructionBusiness', '@id': `${home}#business`, name: site.name, url: home,
+    description: homeDescription, telephone: site.phone, image: ogUrl,
     address: { '@type': 'PostalAddress', addressLocality: site.baseLocation, addressCountry: 'GH' },
     areaServed: { '@type': 'Country', name: 'Ghana' },
     ...(site.jijiUrl ? { sameAs: [site.jijiUrl] } : {}),
   }] : []),
+  ...schema,
 ] : [];
 const jsonLd = graph.length ? { '@context': 'https://schema.org', '@graph': graph } : null;
 ---

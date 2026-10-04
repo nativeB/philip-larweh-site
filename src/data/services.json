@@ -10,7 +10,8 @@
     ],
     "photo": "beam-slab-rebar-worker.jpg",
     "alt": "Tied reinforcement bars for a beam and slab, laid over a lined deck",
-    "message": "Hello, I found your website. I need steel bending / iron work for a project in [location]. Can we discuss availability and a quote?"
+    "message": "Hello, I found your website. I need steel bending / iron work for a project in [location]. Can we discuss availability and a quote?",
+    "page": "/services/steel-bending/"
   },
   {
     "id": "carpentry",
@@ -23,7 +24,8 @@
     ],
     "photo": "roof-level-beam-formwork.jpg",
     "alt": "Timber beam boxes and joists at roof level on a block building, supported by bamboo props",
-    "message": "Hello, I found your website. I need carpentry work for a project in [location]. Can we discuss availability and a quote?"
+    "message": "Hello, I found your website. I need carpentry work for a project in [location]. Can we discuss availability and a quote?",
+    "page": "/services/carpentry/"
   },
   {
     "id": "formwork",
@@ -36,7 +38,8 @@
     ],
     "photo": "staircase-formwork-rebar.jpg",
     "alt": "Timber staircase formwork with reinforcement bars tied in place",
-    "message": "Hello, I found your website. I need formwork / floor decking for a project in [location]. Can we discuss availability and a quote?"
+    "message": "Hello, I found your website. I need formwork / floor decking for a project in [location]. Can we discuss availability and a quote?",
+    "page": "/services/formwork-floor-decking/"
   },
   {
     "id": "hire",
@@ -50,6 +53,6 @@
     "photo": "film-faced-plywood-stack.jpg",
     "alt": "A stack of film-faced plywood boards on a concrete floor",
     "message": "Hello, I found your website. I would like to hire materials for floor decking/formwork. Items and quantity: [items]. Site location: [location]. Hire period: [dates]. Can you tell me availability and rates?",
-    "link": "#materials"
+    "page": "/materials/"
   }
 ]

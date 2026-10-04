@@ -3,12 +3,12 @@ import site from '../data/site.json';
 import Icon from './Icon.astro';
 import { telLink } from '../lib/whatsapp';
 const links = [
-  ['#services', 'Services'], ['#work', 'Our Work'], ['#materials', 'Materials for Hire'], ['#about', 'About'], ['#contact', 'Contact'],
+  ['/#services', 'Services'], ['/#work', 'Our Work'], ['/materials/', 'Materials for Hire'], ['/areas/', 'Areas'], ['/#contact', 'Contact'],
 ];
 ---
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label={`${site.name}, back to top`}>
+    <a class="brand" href="/" aria-label={`${site.name}, home`}>
       <strong>{site.name}</strong>
       <span>{site.tagline}</span>
     </a>
