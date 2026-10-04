@@ -13,7 +13,7 @@
   "hours": "Standard working hours",
   "social": [],
   "domain": "philip-larweh-site.vercel.app",
-  "structuredData": false,
+  "structuredData": true,
   "analytics": null,
   "about": {
     "confirmed": true,

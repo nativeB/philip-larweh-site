@@ -4,7 +4,8 @@ import site from '../data/site.json';
 import { photo } from '../lib/photos';
 import '../styles/global.css';
 
-const title = `${site.name} | Steel Bending, Carpentry, Formwork & ${site.deckingTerm.replace(/\b\w/g, (c) => c.toUpperCase())} Materials, ${site.baseLocation}`;
+// Kept under ~60 characters so Google doesn't truncate it.
+const title = `${site.name} – Steel Bending, Carpentry & Formwork in ${site.baseLocation}`;
 const description = `${site.name}: steel bending, carpentry, formwork and ${site.deckingTerm} installation, plus ${site.deckingTerm} and formwork materials for hire. Based in ${site.baseLocation}, available for projects across Ghana. Chat on WhatsApp or call ${site.phoneDisplay}.`;
 const og = await getImage({ src: photo('slab-rebar-film-faced-deck.jpg'), width: 1040, format: 'jpg', quality: 75 });
 const base = Astro.site;
@@ -14,13 +15,19 @@ const canonical = base ? new URL('/', base).href : null;
 type Analytics = { provider: 'plausible'; domain: string } | { provider: 'goatcounter'; code: string } | null;
 const analytics = site.analytics as Analytics;
 
-// Structured data only once the business facts and domain are confirmed (no ratings, no invented address).
-const jsonLd = site.structuredData && base ? {
-  '@context': 'https://schema.org', '@type': 'GeneralContractor', name: site.name, url: canonical,
-  telephone: site.phone, image: ogUrl, areaServed: 'Ghana',
-  address: { '@type': 'PostalAddress', addressLocality: site.baseLocation, addressCountry: 'GH' },
-  ...(site.jijiUrl ? { sameAs: [site.jijiUrl] } : {}),
-} : null;
+// WebSite markup tells Google the site's name (otherwise it shows the host, "Vercel").
+// Business markup only once the facts are confirmed: no ratings, no invented street address.
+const graph = base ? [
+  { '@type': 'WebSite', '@id': `${canonical}#website`, name: site.name, alternateName: [`${site.name} Construction`, 'Philip Larweh Formwork'], url: canonical },
+  ...(site.structuredData ? [{
+    '@type': 'HomeAndConstructionBusiness', '@id': `${canonical}#business`, name: site.name, url: canonical,
+    description, telephone: site.phone, image: ogUrl,
+    address: { '@type': 'PostalAddress', addressLocality: site.baseLocation, addressCountry: 'GH' },
+    areaServed: { '@type': 'Country', name: 'Ghana' },
+    ...(site.jijiUrl ? { sameAs: [site.jijiUrl] } : {}),
+  }] : []),
+] : [];
+const jsonLd = graph.length ? { '@context': 'https://schema.org', '@graph': graph } : null;
 ---
 <!doctype html>
 <html lang="en-GH">
@@ -34,7 +41,10 @@ const jsonLd = site.structuredData && base ? {
     {site.googleSiteVerification && <meta name="google-site-verification" content={site.googleSiteVerification} />}
     <meta name="theme-color" content="#1d1a17" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="application-name" content={site.name} />
+    <meta name="apple-mobile-web-app-title" content={site.name} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogUrl} />
