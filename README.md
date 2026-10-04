@@ -41,7 +41,14 @@ All content lives in `src/data/`:
 - **Jiji**: leave `jijiUrl` empty to hide the link.
 - The `[location]`-style brackets in WhatsApp messages are intentional prompts for the customer to fill in.
 
-## Photos
+## Service, material, area and guide pages
+Each inner page is a Markdown file in `src/content/pages/`. The folder path becomes the URL (`services/steel-bending.md` → `/services/steel-bending/`).
+
+- The front matter at the top sets the page `kind`, menu `label`, `metaTitle` (keep under ~60 characters, main keyword first), `description` (~150 characters), headline, hero photo, extra photos, FAQs, `related` page ids and the pre-filled WhatsApp `message`.
+- The body below the front matter is ordinary Markdown.
+- **To add a page**, copy a similar file, change the front matter and text, and push. The footer, hub pages, sitemap and structured data update automatically.
+- Only write what Philip has confirmed: no prices, years of experience or claims about specific clients or locations.
+
 - Originals stay untouched in the two `WhatsApp Unknown…` folders.
 - `scripts/copy-photos.mjs` lists which originals are used and their web names. Edit it and run `npm run photos` to copy them into `src/assets/photos/`. `docs/PHOTO_MAP.md` records the mapping.
 - To add a photo: copy it into `src/assets/photos/` with a descriptive name, then add an entry to `gallery.json` (or `materials.json`) with truthful alt text. Astro generates resized AVIF/WebP/JPEG versions automatically.
